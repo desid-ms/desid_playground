@@ -1,0 +1,112 @@
+---
+title: |
+  Mapeamento de sistemas e
+  processos de geração de dados
+subtitle: |
+  Relatório de entrega do segundo produto da Consultoria Individual de Ciência de Dados e Aprendizado de Máquina no Departamento de Economia e Desenvolvimento em Saúde no âmbito da Cooperação Técnica BR-T1550
+lang: pt-br
+author:
+  - name: Frederico Guth
+    corresponding: true
+    email: frederico.guth@saude.gov.br
+    affiliations:
+      - BID
+    role: Autor
+keywords:
+  - Mapeamento
+  - Produto 2
+  - Cooperação Técnica BR-T1550 (BID/MS)
+version: [v.202407201432]
+date: last-modified
+abstract: |
+  This Typst template adopts many aspects of the design and typography of Edward Tufte's books. The document itself demonstrates the functionality and usage of the template, including setup, sidenotes, figure display, citations, and more.
+first-page-footer: |
+  Content of the footer in the first page
+toc-title: "Sumário"
+format:
+  desid-typst: default
+---
+
+## Introduction
+
+Edward Tufte is an American statistician, professor, and pioneer in the field of data visualization, known for his work on the visual presentation of data and information. He is the author of influential books such as "The Visual Display of Quantitative Information" and is renowned for his principles on clarity, precision, and efficiency in data graphics. His books have inspired a unique design and typography, created by Howard Gralla.
+
+<!-- ```{r}
+#| code-fold: true
+gc()
+rm(list=ls())
+print("Ambiente Limpo")
+```
+
+Without `{python}`
+```
+a = 42
+
+``` -->
+With
+```{python}
+#| code-fold: false
+a = 42
+```
+<!-- 
+This Typst template adopts many of the conventions used by Gralla and Tufte and allows the interested author to obtain a similar appearance to style of Tufte's publications. However, the design adapts the book-format to work as an article (i.e., not having multiple parts and chapters and so forth, but instead something more akin to a memo or academic journal article).
+
+
+This document is a skeuomorph of the template; it intends to demonstrate the template's functionality across various frontmatter styles, citations, figures, and importantly, sidenotes.
+
+## Using this template
+Largely, this template is used by importing and calling the `#template()` function, understanding the quirks of its formatting, and making use of its features such as wideblocks and sidenotes.
+
+<!-- ```{=typst}
+#note(["teste"])
+``` -->
+
+
+The template can be configured with 13 arguments, which comprise:
+
+- `title` (`content`, required).
+- `shorttitle` (`content`, optional) displayed in the header if not `none`, otherwise the `title` is displayed instead.
+- `subtitle` (`content`, optional).
+- `date` (`datetime`, optional) displays the date on the title page if not `none`.
+- `document-number` (`content`, optional) reference number for document's version or some other serialization. Displayed in the header if present.
+- `draft` (`bool`, optional) displays a note in the footer and also places a watermark across every page if `true`.
+- `distribution` (`content`, optional) places a note in the footer if present.
+- `abstract` (`content`, optional) displays the abstract below the author block if present.
+- `publisher` (`content`, optional) displays below the title in the header if present.
+- `toc` (`bool`, optional) displays an `outline` below the abstract if `true`.
+- `bib` (`bibliography`, optional) displays a bibliography at the end of the document if not `none`. Must be a filepath reference if not `none`.
+- `footer-content` (`content` or `array`, optional) if `content` then displays in the footer; if `array`, then displays first element in first page footer and second element in all other pages; or `none` and no content is displayed in footer.
+
+### Objetivo
+<!-- Conforme mencionado no Plano de Trabalho  o nível de maturidade analítica é uma forma de medir e acompanhar o progresso nos processos de desenvolvimento de produtos de dados de uma organização.  
+
+| **Nível** | **Nome**           | **Descrição**                                  |
+|:----:|:---------------|:---------------------------------------------------|
+| 1     | Inicial        | Processos ad-hoc, não estruturados e frequentemente caóticos.|
+| 2     | Repetível      | Processos gerenciáveis e repetitivos, mas com pouca formalização.|
+| 3     | Definido       | Processos documentados, padronizados e integrados.       |
+| 4     | Gerenciado     | Processos monitorados e controlados, com melhoria contínua baseada em métricas.|
+| 5     | Otimizado      | Foco na otimização contínua e no uso de dados para inovação e vantagem competitiva.|
+: Níveis de Maturidade Analítica
+ --> 
+
+### Método
+1. Escolha do questionário de auto-avaliação
+Estudamos os métodos de avaliação de maturidade analítica aplicados em organizações governamentais e decidimos criar um questionário de auto-avaliação baseado no modelo proposto pela OCDE, por ser um modelo mais simples e próximo à realidade do DESID.
+1. Traduzimos o questionário para o português
+2. Fizemos uma avaliação teste com a COAGEP/DESID, onde o consultor atuou apenas para explicar o questionário e se manteve isento de opinar
+- Nesse teste, percebemos dificuldades dos avaliadores com o nível de abstração das perguntas
+- Decidimos que seria preciso criar a própria avaliação
+1. Criamos um questionário de avaliação ainda bastante baseado no modelo da OCDE, mas bastante adaptado para o contexto do DESID
+2. Fizemos reuniões com os coordenadores e suas equipes aplicando o questionário
+3. Compilamos as respostas
+
+### Questionário de Auto-avaliação
+O questionário (Anexo 1) é composto de 14 assuntos (questões), organizados em três grandes dimensões: Estratégia, Governança e Capacidade.
+Para cada assunto, a pergunta é "Qual das 5 situações a seguir melhor descreve como você percebe os processos analíticos no seu trabalho hoje?".
+
+### Resultados
+As coordenações da CGES se auto-avaliaram em um nível **1,36** em uma escala até 5.  
+
+
+
