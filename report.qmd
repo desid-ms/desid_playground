@@ -12,6 +12,10 @@ author:
     affiliations:
       - BID
     role: Autor
+product:
+    name: Produto 1
+    project: Projeto
+    contract: Contrato
 keywords:
   - Mapeamento
   - Produto 2
@@ -22,14 +26,16 @@ abstract: |
   This Typst template adopts many aspects of the design and typography of Edward Tufte's books. The document itself demonstrates the functionality and usage of the template, including setup, sidenotes, figure display, citations, and more.
 first-page-footer: |
   Content of the footer in the first page
+toc: true
 toc-title: "Sumário"
+bibliography: references.bib
 format:
   desid-typst: default
 ---
 
 ## Introduction
 
-Edward Tufte is an American statistician, professor, and pioneer in the field of data visualization, known for his work on the visual presentation of data and information. He is the author of influential books such as "The Visual Display of Quantitative Information" and is renowned for his principles on clarity, precision, and efficiency in data graphics. His books have inspired a unique design and typography, created by Howard Gralla.
+Edward Tufte @Tufte2001[p.30, dy.6.5cm] is an American statistician, professor, and pioneer in the field of data visualization, known for his work on the visual presentation of data and information. He is the author of influential books such as @Tufte2001[dy.6cm] and is renowned for his principles on clarity, precision, and efficiency in data graphics. His books have inspired a unique design and typography, created by Howard Gralla.
 
 <!-- ```{r}
 #| code-fold: true

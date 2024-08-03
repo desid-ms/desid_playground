@@ -19,18 +19,17 @@ $if(by-author)$
     $endfor$    
   ),
 $endif$
-$if(date)$
-  date: [$date$],
-$endif$
-$if(contract)$
-  contract: [$contract$],
-$endif$
-$if(project)$
-  project: [$project$],
-$endif$
 $if(product)$
-  product: [$product$],
+product: (
+      name: [$if(product.name)$$product.name$$else$none$endif$],
+      project:[$if(product.project)$$product.project$$else$none$endif$],
+      contract:[$if(product.contract)$$product.contract$$else$none$endif$],
+    ),
+$endif$            
+$if(date)$
+  date: "$date$",
 $endif$
+
 $if(lang)$
   lang: "$lang$",
 $endif$

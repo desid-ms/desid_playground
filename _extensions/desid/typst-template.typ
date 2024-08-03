@@ -1,4 +1,3 @@
-#import "@preview/drafting:0.2.0": *
 
 #let wideblock(content, ..kwargs) = block(..kwargs, width:100%+7cm-1cm, content)
 
@@ -110,22 +109,61 @@
   })
       
       line(length: 100%, stroke: 3pt + rgb("#316E6B"))
-      v(-1cm)
+      v(-0.5cm)
     })
   
-  
-  let tocblock() = {
+
+let tocblock() = {
           set par(first-line-indent: 0pt)
-          place(dx:13.5cm, dy:1.09cm, block(width: 5.5cm)[
-          #text(size:14pt, weight:"black", [#toc_title])
+          
+          [#text(size:14pt, weight:"black", [#toc_title])
           #set text(size:.75em, font: sans-fonts)
           #outline(
             title: none,
             depth: 2,
             indent: 1em
-          )
-          ])
+          )]
+    
         }
+   
+    
+  let authorblock() = {  
+    block(width:100%, inset: 1em, fill:rgb("#316E6B").lighten(95%), radius: 10pt)[
+      #set text(font: sans-fonts, size: 8pt)
+      #set par(first-line-indent: 0em)
+      #for (author) in authors [
+          #if author.role != none [#text(weight: "bold", author.role) \ ]
+          #h(1em)#author.name #if author.affiliation!=none {text(font: "SF Mono")[(#author.affiliation) \ ]}
+          #if author.email != none [#h(1em)#text(size: 7pt, font: "SF Mono", author.email)]
+          #v(.5em)
+        ]
+       
+        #if product != none [
+          #if product.contract != none [ *Contrato* #h(1em)#text(size: 7pt, font: sans-fonts, product.contract)#v(.5em) ]
+
+          #if product.project != none [ *Projeto*  #h(1em)#text(size: 7pt, font: sans-fonts, product.project)#v(.5em) ]
+
+          #if product.name != none [ *Produto* #h(1em)#text(size: 7pt, font: sans-fonts, product.name)#v(.5em) ]
+          
+          #if date != none {
+            let (year, month, day) = date.split("-")
+            let day = datetime(year: int(year), month: int(month), day: int(day))
+
+            [ *Publicação*  #h(1em)#text(size: 7pt, font: sans-fonts, day.display("[day]/[month]/[year]"))  ]}
+
+        ]     
+        
+      ] 
+  }
+      
+        
+place(dx: 6.5cm, dy:.5cm, right, block(width: 6cm, inset: 1em,)[
+      #set align(left)
+      #if authors != none [#authorblock()]
+      #if toc !=none [#tocblock()]
+])
+
+
 
 
   // Headings
@@ -167,6 +205,7 @@
   show figure.where(kind: raw): set figure(supplement: [Code], numbering: "1")
   show raw: set text(font: "Lucida Console", size: 10pt)
 
+
   // Equations
   set math.equation(numbering: "(1)")
   show math.equation: set block(spacing: 0.65em)
@@ -196,18 +235,21 @@
   )
 
 
-// Finish setting up sidenotes
-  set-page-properties()
-  set-margin-note-defaults(
-    stroke: none,
-    side: right,
-    margin-right: 7cm,
-    margin-left: 1cm,
-  )
+  let margincite(citation) = context {
+    if query(bibliography).len()>0 {
+      let (key, supplement, form, style) = citation.fields()
+      let sy= repr(supplement).slice(1,-1).split(",").filter(value => value.contains("dy."))
+      let y = if sy.len()>0 {sy.at(0).replace("dy.", "").replace(" ", "")} else {none}
+      if sy.len()>0 {supplement = repr(supplement).replace(sy.at(0), "").replace("[", "").replace("]", "").replace(",", "")}    
+      cite(key, form: "normal", supplement: supplement)
+      set text(size: 7pt)  
+      
+      // if y!=none {place(dy:eval(y), dx:100%+.65cm)[#block(width: 5.5cm, inset:1em)[#cite(key, form:"full", supplement: supplement)]]}
 
-  tocblock()
-  // place(dy:1em, doc)
+    }
+  }
 
+  show cite.where(form:"prose"): margincite  
   doc
 
   show bibliography: set text(font:sans-fonts)
@@ -222,44 +264,8 @@
 }
 
   
-/* Sidenotes
-  - `dy: length` Adjust the vertical position as required (default `0pt`).
-  - `numbered: bool` Display a footnote-style number in text and in the note (default `true`).
-  - `content: content` The content of the note.
-*/
-#let notecounter = counter("notecounter")
-#let note(dy:-2em, numbered:true, content) = {
-  if numbered {
-    notecounter.step()
-    text(weight:"bold",super(notecounter.display()))
-  }
-  text(size:9pt,font: sans-fonts,margin-note(if numbered {
-    text(weight:"bold",font: sans-fonts,size:11pt,{
-      super(notecounter.display())
-      text(size: 9pt, " ")
-    })
-    content
-  } else {
-    content}
-    ,dy:dy))
-  }
 
-/* Sidenote citation
-  - `dy: length` Adjust the vertical position as required (default `0pt`).
-  - `supplement: content` Supplement for the in-text citation (e.g., `p.~7`), (default `none`).
-  - `key: label` The bibliography entry's label.
 
-CAUTION: if no bibliography is defined, then this function will not display anything.
-*/
-#let notecite(dy:-2em,supplement:none,key) = context {
-  let elems = query(bibliography)
-  if elems.len() > 0 {
-    cite(key,supplement:supplement,style:"ieee")
-    note(
-      cite(key,form: "full",style: "template/short_ref.csl"),
-      dy:dy,numbered:false
-    )
-  }
-}
+
 
   
